@@ -1,0 +1,107 @@
+/*body {*/
+/*    margin: 0;*/
+/*    font-family: Arial, sans-serif;*/
+/*    background-color: #f5f7fa;*/
+/*    color: #333;*/
+/*}*/
+
+header {
+    background-color: #1e293b;
+    color: white;
+    padding: 20px 40px;
+    /*display: flex;*/
+    /*justify-content: space-between;*/
+    /*align-items: center;*/
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.hero {
+    padding: 80px 40px;
+    background: linear-gradient(to right, #3b82f6, #2563eb);
+    color: white;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.hero button {
+    padding: 14px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: white;
+    color: #2563eb;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.section {
+    padding: 60px 40px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.section h2 {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.card h3 {
+    margin-bottom: 15px;
+}
+
+footer {
+    background-color: #1e293b;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 60px;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* main footer'ni pastga itaradi */
+main {
+    flex: 1;
+}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} kitoblar royxati{% endblock %}
+
+{% block main %}
+    <div class="container mt-4">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">title</th>
+                <th scope="col">description</th>
+                <th scope="col">price</th>
+                <th scope="col">action</th>
+            </tr>
+            </thead>
+            {% for b in books %}
+                <tbody>
+                <tr>
+                    <th scope="row">{{ b.id }}</th>
+                    <td>{{ b.title }}</td>
+                    <td>{{ b.description | truncatechars:50 }}</td>
+                    <td>{{ b.price }} summ</td>
+                    <td><a href="{% url 'book_detail' b.id %}">
+                        <button>detail</button>
+                    </a></td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

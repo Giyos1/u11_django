@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %} detail {% endblock %}
+
+
+{% block main %}
+
+    <div class="col-md-4 col-sm-6">
+        <div class="card h-100 shadow-sm">
+
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ b.title }}</h5>
+
+                <h6 class="text-muted mb-2">
+                    {{ b.author|default:"Nomaʼlum muallif" }}
+                </h6>
+
+                <p class="card-text">
+                    {{ b.description|truncatechars:100 }}
+                </p>
+
+                <div class="mt-auto">
+                    <p class="fw-bold mb-1">
+                        📄 {{ b.page_count|default:"?" }} sahifa
+                    </p>
+
+                    <p class="fw-bold text-primary mb-2">
+                        💰 {{ b.price }} so‘m
+                    </p>
+
+                    <span class="badge bg-secondary">
+                            {{ b.get_genre_display }}
+                        </span>
+                </div>
+            </div>
+        </div>
+        <a href="{% url 'book_list' %}">
+            <button class="btn btn-primary">back</button>
+        </a>
+        <a href="{% url 'book_delete' b.id %}">
+            <button class="btn btn-danger">delete</button>
+        </a>
+    </div>
+{% endblock %}
