@@ -4,7 +4,9 @@
 
 {% block main %}
     <div class="container mt-4">
-
+        <a href="{% url 'book_create' %}">
+            <button class="btn btn-primary">create</button>
+        </a>
         <table class="table">
             <thead>
             <tr>
@@ -22,9 +24,16 @@
                     <td>{{ b.title }}</td>
                     <td>{{ b.description | truncatechars:50 }}</td>
                     <td>{{ b.price }} summ</td>
-                    <td><a href="{% url 'book_detail' b.id %}">
-                        <button>detail</button>
-                    </a></td>
+                    <td>
+                        <a href="{% url 'book_detail' b.id %}">
+                            <button class="btn btn-success">detail</button>
+                        </a>
+                        
+{#                        <a href="{% url 'book_detail' b.id %}">#}
+{#                            <button class="btn btn-success">detail</button>#}
+{#                        </a>#}
+
+                    </td>
                 </tr>
 
             {% endfor %}

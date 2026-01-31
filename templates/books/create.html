@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %} Book create {% endblock %}
+
+{% block main %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+
+                <div class="card shadow-lg">
+                    <div class="card-body">
+
+                        <h4 class="text-center mb-4">📘 Yangi kitob qo‘shish</h4>
+
+                        <form method="post" action="{% url 'book_create_post' %}">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label class="form-label">Title</label>
+                                <input
+                                        type="text"
+                                        name="title"
+                                        class="form-control"
+                                        placeholder="Kitob nomi"
+                                        required
+                                >
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea
+                                        name="description"
+                                        class="form-control"
+                                        rows="4"
+                                        placeholder="Qisqacha tavsif"
+                                ></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Price</label>
+                                <input
+                                        type="number"
+                                        name="price"
+                                        class="form-control"
+                                        placeholder="Narxi"
+                                >
+                            </div>
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    💾 Saqlash
+                                </button>
+                            </div>
+                            <div class="d-grid mt-4">
+                                <a href="{% url 'book_list' %}"> orqaga</a>
+                            </div>
+
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
