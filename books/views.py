@@ -2,6 +2,7 @@ from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
 
+from books.forms import BookForm, BookModelForm
 from books.models import Book
 
 
@@ -25,17 +26,33 @@ def book_delete(request, pk=None):
 
 
 def book_create(request):
-    return render(request, 'books/create.html')
+    # form = BookForm()
+    form = BookModelForm()
+    return render(request, 'books/create.html', context={'form': form})
 
 
 def book_create_post(request):
-    data = request.POST
-    Book.objects.create(
-        title=data.get('title'),
-        description=data.get('description'),
-        price=data.get('price')
-    )
-    return redirect('book_list')
+    # data = request.POST
+    # Book.objects.create(
+    #     title=data.get('title'),
+    #     description=data.get('description'),
+    #     price=data.get('price')
+    # )
+    # form = BookForm(request.POST)
+    form = BookModelForm(request.POST)
+    if form.is_valid():
+        # data = form.cleaned_data
+        # Book.objects.create(
+        #     title=data.get('title'),
+        #     description=data.get('description'),
+        #     price=data.get('price'),
+        #     page_count=data.get('page_count'),
+        #     genre=data.get('genre')
+        # )
+        form.save()
+        return redirect('book_list')
+    else:
+        return render(request, 'books/create.html', context={"form": form})
 
 
 def book_update(request, pk=None):

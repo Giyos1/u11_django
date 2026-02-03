@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 # Author -> full_name,birth_date, bio
@@ -27,6 +28,11 @@ class Genre(models.TextChoices):
     ILMIY = 'ilmiy', 'Ilmiy'
 
 
+def musbat(value):
+    if value < 0:
+        raise ValidationError('0 dan katta son kiriting')
+
+
 class Book(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -40,3 +46,11 @@ class Book(models.Model):
     class Meta:
         db_table = 'books'
 
+    def clean(self, *args, **kwargs):
+        if self.price < 0:
+            raise ValidationError('0 dan katta son kiriting')
+        super().clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
