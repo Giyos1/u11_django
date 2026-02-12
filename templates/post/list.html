@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    post list
+{% endblock %}
+
+{% block main %}
+
+
+    <div class="container mt-4">
+        <a href="{% url 'post:create' %}">
+            <button class="btn btn-primary">create</button>
+        </a>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">title</th>
+                <th scope="col">content</th>
+                <th scope="col">created_at</th>
+                <th scope="col">updated_at</th>
+                <th scope="col">action</th>
+            </tr>
+            </thead>
+            {% for p in posts %}
+                <tbody>
+                <tr>
+                    <th scope="row">{{ p.id }}</th>
+                    <td>{{ p.title }}</td>
+                    <td>{{ p.content | truncatechars:50 }}</td>
+                    <td>{{ p.created_at }} </td>
+                    <td>{{ p.updated_at }} </td>
+                    <td>
+                        <a href="#">
+                            <button class="btn btn-success">detail</button>
+                        </a>
+
+                        <a href="{% url 'post:update' p.id %}">
+                            <button class="btn btn-success">update</button>
+                        </a>
+
+                    </td>
+                </tr>
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <nav aria-label="...">
+            <ul class="pagination">
+
+                {# Previous #}
+                {% if posts.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="?page={{ posts.previous_page_number }}&search={{ search }}">orqaga</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">orqaga</a>
+                    </li>
+                {% endif %}
+
+
+
+
+                {# number #}
+                {% for p in posts.paginator %}
+                    {% if p.number == posts.number %}
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="?page={{ p.number }}&search={{ search }}">{{ p.number }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ p.number }}&search={{ search }}">{{ p.number }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+
+
+                {# next #}
+
+                {% if posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posts.next_page_number }}&search={{ search }}">keyingi</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">keyingi</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
