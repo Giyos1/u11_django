@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    login
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+
+                <div class="card shadow-lg">
+                    <div class="card-body">
+
+                        <h4 class="text-center mb-4">📘login oynasi</h4>
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-success btn-lg">
+                                    login
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

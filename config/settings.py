@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # local
     'books',
     'post',
+    'accounts',
 
 ]
 
@@ -91,7 +92,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "u11_django",
-        "USER": "giyos",
+        "USER": "postgres",
         "PASSWORD": "12",
         "HOST": "127.0.0.1",
         "PORT": "5432",
