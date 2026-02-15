@@ -1,6 +1,8 @@
 from django.db.models.query_utils import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
+
+from accounts.utils import login_required
 from post.forms import PostForms
 from post.models import Post
 
@@ -16,6 +18,7 @@ def post_list(request):
     return render(request, 'post/list.html', {'posts': posts, 'search': search})
 
 
+@login_required
 def post_create(request):
     if request.method == 'POST':
         forms = PostForms(request.POST)
@@ -37,3 +40,9 @@ def post_update(request, id=None):
         return render(request, 'post/update.html', {'forms': forms})
     forms = PostForms(instance=post)
     return render(request, 'post/update.html', {'forms': forms})
+
+
+@login_required
+def post_delete(request, id=None):
+    Post.objects.filter(id=id).delete()
+    return redirect('post:list')

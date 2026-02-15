@@ -8,9 +8,11 @@
 
 
     <div class="container mt-4">
-        <a href="{% url 'post:create' %}">
-            <button class="btn btn-primary">create</button>
-        </a>
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'post:create' %}">
+                <button class="btn btn-primary">create</button>
+            </a>
+        {% endif %}
         <table class="table">
             <thead>
             <tr>
@@ -34,11 +36,15 @@
                         <a href="#">
                             <button class="btn btn-success">detail</button>
                         </a>
+                        {% if request.user.is_authenticated %}
 
-                        <a href="{% url 'post:update' p.id %}">
-                            <button class="btn btn-success">update</button>
-                        </a>
-
+                            <a href="{% url 'post:update' p.id %}">
+                                <button class="btn btn-success">update</button>
+                            </a>
+                            <a href="{% url 'post:delete' p.id %}">
+                                <button class="btn btn-danger">delete</button>
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
 
@@ -71,7 +77,8 @@
                             <a class="page-link" href="?page={{ p.number }}&search={{ search }}">{{ p.number }}</a>
                         </li>
                     {% else %}
-                        <li class="page-item"><a class="page-link" href="?page={{ p.number }}&search={{ search }}">{{ p.number }}</a></li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ p.number }}&search={{ search }}">{{ p.number }}</a></li>
                     {% endif %}
                 {% endfor %}
 

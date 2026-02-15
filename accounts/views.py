@@ -1,10 +1,7 @@
-from django.contrib.auth import authenticate, login
-from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-
-from accounts import forms
 from accounts.forms import RegisterForm, LoginForm
+from accounts.utils import login_required
 
 
 def register(request):
@@ -31,16 +28,18 @@ def login_(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            data = form.cleaned_data
-            user = authenticate(username=data.get('username'), password=data.get('password'))
-            if user:
-                login(request, user)
-                return redirect('post:list')
-            else:
-                return HttpResponse('xato')
+            user = form.cleaned_data.get('user')
+            login(request, user)
+            return redirect('post:list')
         else:
             return render(request, 'accounts/login.html', {'form': form})
 
     else:
         form = LoginForm()
         return render(request, 'accounts/login.html', {'form': form})
+
+
+@login_required
+def logout_(request):
+    logout(request)
+    return redirect('accounts:login')
