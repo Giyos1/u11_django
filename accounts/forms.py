@@ -20,12 +20,12 @@ class RegisterForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=200)
+    email = forms.EmailField(max_length=200)
     password = forms.CharField(widget=forms.PasswordInput)
 
     def clean(self):
         data = self.cleaned_data
-        user = authenticate(username=data.get('username'), password=data.get('password'))
+        user = authenticate(username=data.get('email'), password=data.get('password'))
 
         if not user:
             raise forms.ValidationError('username yoki parrol xato')

@@ -1,6 +1,11 @@
 from django.db import models
 
 
+class StatusChoice(models.TextChoices):
+    DRAFT = 'draft'
+    PUBLISHED = 'published'
+
+
 class BaseQuerySet(models.QuerySet):
     def delete(self):
         self.update(is_deleted=True)
@@ -17,6 +22,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)
+    status = models.CharField(max_length=200, choices=StatusChoice, default=StatusChoice.DRAFT)
+    author = models.ForeignKey('accounts.User', on_delete=models.SET_NULL, null=True, blank=True)
 
     objects = DeletedManager()
 
