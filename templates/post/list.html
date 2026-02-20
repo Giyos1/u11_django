@@ -5,10 +5,8 @@
 {% endblock %}
 
 {% block main %}
-
-
     <div class="container mt-4">
-        {% if request.user.is_authenticated %}
+        {% if perms.post.add_post %}
             <a href="{% url 'post:create' %}">
                 <button class="btn btn-primary">create</button>
             </a>

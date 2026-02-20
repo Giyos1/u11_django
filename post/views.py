@@ -6,6 +6,7 @@ from accounts.models import RoleChoice
 from accounts.utils import login_required, poster
 from post.forms import PostForms
 from post.models import Post
+from django.contrib.auth.decorators import permission_required
 
 
 def post_list(request):
@@ -24,7 +25,7 @@ def post_list(request):
     return render(request, 'post/list.html', {'posts': posts, 'search': search})
 
 
-@poster
+@permission_required('post.add_post')
 def post_create(request):
     if request.method == 'POST':
         forms = PostForms(request.POST)
@@ -37,7 +38,8 @@ def post_create(request):
     forms = PostForms()
     return render(request, 'post/create.html', {'forms': forms})
 
-@poster
+
+@permission_required('post.change_post')
 def post_update(request, id=None):
     post = get_object_or_404(Post, id=id)
     if request.method == 'POST':
@@ -50,7 +52,8 @@ def post_update(request, id=None):
     return render(request, 'post/update.html', {'forms': forms})
 
 
-@poster
+@permission_required('post.delete_post', raise_exception=True)
 def post_delete(request, id=None):
+    print(request.user.groups.all())
     Post.objects.filter(id=id).delete()
     return redirect('post:list')

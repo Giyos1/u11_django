@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 
-
+# role Based Parmession kichinka yoki Role static bolsa
 class RoleChoice(models.TextChoices):
     ADMIN = 'admin', 'Admin'
     POSTER = 'poster', 'Poster'

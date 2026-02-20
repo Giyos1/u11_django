@@ -10,6 +10,7 @@ def login_required(func):
             return func(request, *args, **kwargs)
         else:
             return redirect('accounts:login')
+
     return wrapper
 
 
@@ -24,7 +25,9 @@ def admin(func):
 
 def poster(func):
     def wrapper(request, *args, **kwargs):
+        print(request.user.role)
         if request.user.role != RoleChoice.POSTER:
             raise PermissionDenied
         return func(request, *args, **kwargs)
+
     return wrapper
