@@ -3,7 +3,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
 
 from accounts.models import RoleChoice
-from accounts.utils import login_required, poster
+# from django.contrib.auth.decorators import user_passes_test
+
+# from accounts.utils import poster_
 from post.forms import PostForms
 from post.models import Post
 from django.contrib.auth.decorators import permission_required
@@ -25,7 +27,8 @@ def post_list(request):
     return render(request, 'post/list.html', {'posts': posts, 'search': search})
 
 
-@permission_required('post.add_post')
+@permission_required('post.add_post', raise_exception=True)
+# @user_passes_test(poster_)
 def post_create(request):
     if request.method == 'POST':
         forms = PostForms(request.POST)
@@ -50,10 +53,10 @@ def post_update(request, id=None):
         return render(request, 'post/update.html', {'forms': forms})
     forms = PostForms(instance=post)
     return render(request, 'post/update.html', {'forms': forms})
+from django.contrib.auth.models import Group, Permission
 
 
 @permission_required('post.delete_post', raise_exception=True)
 def post_delete(request, id=None):
-    print(request.user.groups.all())
     Post.objects.filter(id=id).delete()
     return redirect('post:list')

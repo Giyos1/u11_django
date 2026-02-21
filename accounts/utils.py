@@ -31,3 +31,7 @@ def poster(func):
         return func(request, *args, **kwargs)
 
     return wrapper
+
+
+def poster_(user):
+    return user.groups.filter(name='Poster').exists()

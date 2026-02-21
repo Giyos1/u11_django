@@ -6,11 +6,11 @@
 
 {% block main %}
     <div class="container mt-4">
-        {% if perms.post.add_post %}
+{#        {% if perms.post.add_post %}#}
             <a href="{% url 'post:create' %}">
                 <button class="btn btn-primary">create</button>
             </a>
-        {% endif %}
+{#        {% endif %}#}
         <table class="table">
             <thead>
             <tr>
