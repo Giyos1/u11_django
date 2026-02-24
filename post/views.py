@@ -16,7 +16,7 @@ def post_list(request):
     page = request.GET.get('page', 1)
     posts = Post.objects.all()
 
-    if request.user:
+    if request.user.is_authenticated:
         if request.user.role == RoleChoice.POSTER:
             posts = posts.filter(author=request.user)
 

@@ -43,3 +43,7 @@ def login_(request):
 def logout_(request):
     logout(request)
     return redirect('accounts:login')
+
+
+def transaction(request):
+    return None

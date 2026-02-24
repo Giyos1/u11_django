@@ -31,3 +31,4 @@ class LoginForm(forms.Form):
             raise forms.ValidationError('username yoki parrol xato')
 
         return {'user': user}
+

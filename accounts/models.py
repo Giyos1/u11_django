@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 
+
 # role Based Parmession kichinka yoki Role static bolsa
 class RoleChoice(models.TextChoices):
     ADMIN = 'admin', 'Admin'
@@ -39,3 +40,17 @@ class User(AbstractUser):
 
     class Meta:
         db_table = "users"
+
+
+class Card(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid4, editable=False, verbose_name="uuid")
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    card_number = models.CharField(max_length=255, null=True, blank=True)
+    card_expiration_date = models.DateField(null=True, blank=True)
+    amount = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.card_number
+
+    class Meta:
+        db_table = "cards"
