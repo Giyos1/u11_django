@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'post',
     'accounts',
     'transaction',
+    'notifications',
 
 ]
 
