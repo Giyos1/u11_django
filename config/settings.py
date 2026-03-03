@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'accounts',
     'transaction',
     'notifications',
+    'file',
+    'common',
 
 ]
 
@@ -82,6 +84,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_URL = "/static/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases

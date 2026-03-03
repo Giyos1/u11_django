@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    list
+{% endblock %}
+
+{% block main %}
+    {% for f in files %}
+        File <a href="/media/{{ f.file }}">{{ f.title }}</a><br>
+        IMG <img src="/media/{{ f.image }}"><br>
+    {% endfor %}
+{% endblock %}
