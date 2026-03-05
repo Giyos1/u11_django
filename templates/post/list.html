@@ -54,10 +54,10 @@
             <ul class="pagination">
 
                 {# Previous #}
-                {% if posts.has_previous %}
+                {% if page_obj.has_previous %}
                     <li class="page-item">
                         <a class="page-link"
-                           href="?page={{ posts.previous_page_number }}&search={{ search }}">orqaga</a>
+                           href="?page={{ page_obj.previous_page_number }}&search={{ search }}">orqaga</a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
@@ -69,8 +69,8 @@
 
 
                 {# number #}
-                {% for p in posts.paginator %}
-                    {% if p.number == posts.number %}
+                {% for p in page_obj.paginator %}
+                    {% if p.number == page_obj.number %}
                         <li class="page-item active" aria-current="page">
                             <a class="page-link" href="?page={{ p.number }}&search={{ search }}">{{ p.number }}</a>
                         </li>
@@ -84,9 +84,9 @@
 
                 {# next #}
 
-                {% if posts.has_next %}
+                {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ posts.next_page_number }}&search={{ search }}">keyingi</a>
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ search }}">keyingi</a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">

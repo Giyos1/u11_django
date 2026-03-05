@@ -1,6 +1,9 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models.query_utils import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from accounts.models import RoleChoice
 # from django.contrib.auth.decorators import user_passes_test
@@ -9,6 +12,71 @@ from accounts.models import RoleChoice
 from post.forms import PostForms
 from post.models import Post
 from django.contrib.auth.decorators import permission_required
+
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'post/list.html'
+    context_object_name = 'posts'
+    paginate_by = 3
+
+    def get_queryset(self):
+        search = self.request.GET.get(
+            'search', '')
+
+        posts = Post.objects.all()
+        if self.request.user.is_authenticated:
+            if self.request.user.role == RoleChoice.POSTER:
+                posts = posts.filter(author=self.request.user)
+
+        if search:
+            posts = posts.filter(Q(title__icontains=search) | Q(content__icontains=search))
+
+        return posts
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        context['search'] = \
+            self.request.GET.get('search', '')
+        return context
+
+
+class PostCreateView(PermissionRequiredMixin, CreateView):
+    model = Post
+    template_name = 'post/create.html'
+    form_class = PostForms
+    extra_context = {
+        'forms': PostForms,
+    }
+    permission_required = 'post.add_post'
+    success_url = reverse_lazy('post:list')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class PostUpdateView(
+    PermissionRequiredMixin,
+    UpdateView
+):
+    model = Post
+    form_class = PostForms
+    template_name = 'post/update.html'
+    success_url = reverse_lazy('post:list')
+    permission_required = 'post.change_post'
+    pk_url_kwarg = 'id'
+
+
+class PostDeleteView(
+    PermissionRequiredMixin,
+    DeleteView
+):
+    model = Post
+    success_url = reverse_lazy('post:list')
+    permission_required = 'post.delete_post'
+    template_name = 'post/post_confirm_delete.html'
+    pk_url_kwarg = 'id'
 
 
 def post_list(request):
@@ -53,8 +121,6 @@ def post_update(request, id=None):
         return render(request, 'post/update.html', {'forms': forms})
     forms = PostForms(instance=post)
     return render(request, 'post/update.html', {'forms': forms})
-from django.contrib.auth.models import Group, Permission
-
 
 @permission_required('post.delete_post', raise_exception=True)
 def post_delete(request, id=None):
