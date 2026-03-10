@@ -48,10 +48,10 @@
                     </li>
                 </ul>
                 {% if request.user.is_authenticated %}
-                    <button class="d-flex left"><a class="nav-link active" href="{% url 'accounts:logout' %}">logout</a>
+                    <button class="d-flex left"><a class="nav-link active" href="{% url 'logout' %}">logout</a>
                     </button>
                 {% else %}
-                    <button class="d-flex left"><a class="nav-link active" href="{% url 'accounts:login' %}">login</a>
+                    <button class="d-flex left"><a class="nav-link active" href="{% url 'login' %}">login</a>
                     </button>
 
                 {% endif %}

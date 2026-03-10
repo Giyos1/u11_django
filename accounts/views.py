@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-from accounts.forms import RegisterForm, LoginForm
+from django.views import View
+
+from accounts.forms import RegisterForm, LoginForm, ForgetPasswordForm, ResetPasswordForm
 from accounts.utils import login_required
 
 
@@ -42,8 +44,32 @@ def login_(request):
 @login_required
 def logout_(request):
     logout(request)
-    return redirect('accounts:login')
+    return redirect('login')
 
 
-def transaction(request):
-    return None
+class ForgotPasswordView(View):
+    def get(self, request):
+        form = ForgetPasswordForm()
+        return render(request, 'registration/forgot_password.html', {'form': form})
+
+    def post(self, request):
+        form = ForgetPasswordForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('restore_password')
+        else:
+            return render(request, 'registration/forgot_password.html', {'form': form})
+
+
+class RestoreView(View):
+    def get(self, request):
+        form = ResetPasswordForm()
+        return render(request, 'registration/restore_password.html', {'form': form})
+
+    def post(self, request):
+        form = ResetPasswordForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+        else:
+            return render(request, 'registration/restore_password.html', {'form': form})
