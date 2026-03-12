@@ -61,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "common.middleware.LogIPMiddleware",
+    "common.middleware.TimeLimitMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -134,7 +136,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
