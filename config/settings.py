@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # 3 rd apps
     'django_extensions',
     'rosetta',  # ← qo'shish
+    'modeltranslation',  # django.contrib.admin DAN OLDIN!
 
     # local
     'books',
