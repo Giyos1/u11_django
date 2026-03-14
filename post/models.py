@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class StatusChoice(models.TextChoices):
@@ -17,8 +18,8 @@ class DeletedManager(models.Manager):
 
 
 class Post(models.Model):
-    title = models.CharField(max_length=255)
-    content = models.TextField()
+    title = models.CharField(max_length=255, verbose_name=_("Title"))
+    content = models.TextField(verbose_name=_("Content"))
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     is_deleted = models.BooleanField(default=False)

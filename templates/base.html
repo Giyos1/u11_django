@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="uz">
 <head>
@@ -55,10 +57,19 @@
                     </button>
 
                 {% endif %}
+                <form action="{% url 'set_language' %}"
+                      method="post">
+                    {% csrf_token %}
+                    <select name="language">
+                        <option value="en">English</option>
+                        <option value="uz">O'zbekcha</option>
+                    </select>
+                    <button type="submit">O'zgartir</button>
+                </form>
                 <form class="d-flex left" method="get">
                     <input class="form-control me-2" type="search" name="search" placeholder="Search"
                            aria-label="Search" value="{% if search %}{{ search }}{% endif %}">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit">{% trans "Search" %}</button>
                 </form>
 
             </div>

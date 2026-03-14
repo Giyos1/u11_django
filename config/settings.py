@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import environ
 import os
+from django.utils.translation import gettext_lazy as _
 
 env = environ.Env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
 
     # 3 rd apps
     'django_extensions',
+    'rosetta',  # ← qo'shish
 
     # local
     'books',
@@ -56,13 +58,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "common.middleware.LogIPMiddleware",
-    "common.middleware.TimeLimitMiddleware",
+    # "common.middleware.TimeLimitMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -133,14 +136,32 @@ AUTH_USER_MODEL = "accounts.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
+# data = {
+#     "orginal": {
+#         "en": "sadsad",
+#         "uz": "dsadsd"
+#     }
+# }
 
+# Asosiy til sozlamalari
 LANGUAGE_CODE = 'en-us'
 
+USE_I18N = True  # i18n yoqildi
+USE_L10N = True  # l10n yoqildi
+USE_TZ = True  # Timezone
+
+# Qo'llab-quvvatlanadigan tillar
+LANGUAGES = [
+    ('en', _('English')),
+    ('uz', _('O\'zbekcha')),
+]
+
+# Tarjima fayllari joylashuvi
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
 TIME_ZONE = 'Asia/Tashkent'
-
-USE_I18N = True
-
-USE_TZ = True
 
 # email config
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
