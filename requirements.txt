@@ -5,3 +5,7 @@ django-environ==0.13.0
 Pillow==12.1.1
 django-rosetta==0.10.3
 django-modeltranslation==0.20.2
+django-allauth==65.15.0
+PyJWT==2.12.1
+cryptography==46.0.5
+requests==2.32.5

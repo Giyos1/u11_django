@@ -1,9 +1,12 @@
-from django.contrib.auth import authenticate, login, logout
+import requests
+from django.contrib.auth import login, logout
 from django.shortcuts import render, redirect
 from django.views import View
-
+from urllib.parse import urlencode
 from accounts.forms import RegisterForm, LoginForm, ForgetPasswordForm, ResetPasswordForm
+from accounts.models import User
 from accounts.utils import login_required
+from config import settings
 
 
 def register(request):
@@ -73,3 +76,46 @@ class RestoreView(View):
             return redirect('login')
         else:
             return render(request, 'registration/restore_password.html', {'form': form})
+
+
+def google_redirect(request):
+    base_url = settings.GOOGLE_AUTH_URL
+
+    params = {
+        "client_id": settings.GOOGLE_CLIENT_ID,
+        "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+        "response_type": "code",
+        "scope": "openid email profile",
+    }
+
+    url = f"{base_url}?{urlencode(params)}"
+    return redirect(url)
+
+
+def google_callback(request):
+    code = request.GET.get("code")
+
+    token_data = {
+        "code": code,
+        "client_id": settings.GOOGLE_CLIENT_ID,
+        "client_secret": settings.GOOGLE_CLIENT_SECRET,
+        "redirect_uri": settings.GOOGLE_REDIRECT_URI,
+        "grant_type": "authorization_code",
+    }
+    token_json = requests.post(
+        settings.GOOGLE_TOKEN_URL, data=token_data
+    ).json()
+    access_token = token_json.get("access_token")
+
+    # 2. Foydalanuvchi ma'lumotlari
+    user_info = requests.get(
+        settings.GOOGLE_USER_INFO_URL,
+        headers={"Authorization": f"Bearer {access_token}"}
+    ).json()
+
+    user, _ = User.objects.get_or_create(email=user_info.get("email"))
+    user.first_name = user_info["given_name"]
+    user.last_name = user_info["family_name"]
+    user.save()
+    login(request, user)
+    return redirect('post:list')

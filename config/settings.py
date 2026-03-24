@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 from pathlib import Path
 import environ
 import os
+
+from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
 env = environ.Env()
@@ -44,6 +46,11 @@ INSTALLED_APPS = [
     'django_extensions',
     'rosetta',  # ← qo'shish
     'modeltranslation',  # django.contrib.admin DAN OLDIN!
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
 
     # local
     'books',
@@ -67,6 +74,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "common.middleware.LogIPMiddleware",
     # "common.middleware.TimeLimitMiddleware",
+    'allauth.account.middleware.AccountMiddleware',  # ← qo'sh
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -167,9 +176,35 @@ TIME_ZONE = 'Asia/Tashkent'
 # email config
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
+SITE_ID = 1  # ← muhim!
+
+# AUTHENTICATION_BACKENDS = (
+#     'django.contrib.auth.backends.ModelBackend',
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# )
+
+LOGIN_REDIRECT_URL = reverse_lazy('post:list')
+LOGOUT_REDIRECT_URL = reverse_lazy('logout')
+
+# Ixtiyoriy — email orqali login
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
+
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_HOST_USER = "giyosoripov4@gmail.com"
 EMAIL_HOST_PASSWORD = "rbypdemhfughyjvc"
+
+GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = env("GOOGLE_CLIENT_SECRET")
+
+GOOGLE_REDIRECT_URI = 'http://localhost:8000/en/accounts/google/login/callback/'
+
+GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
+GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
+GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v1/userinfo"

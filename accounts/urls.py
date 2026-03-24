@@ -1,11 +1,13 @@
-from django.contrib.auth.forms import PasswordResetForm
-from django.urls import path, reverse_lazy
+from django.urls import path, include
 
 from accounts import views
 from django.contrib.auth import views as auth_views
 
 # app_name = 'accounts'
 urlpatterns = [
+    # path('', include('allauth.urls')),
+    path('google/', views.google_redirect, name='google_redirect'),
+    path('google/login/callback/', views.google_callback, name='google_callback'),
     path('register/', views.register, name='register'),
     path('login/', views.login_, name='login'),
     path('logout/', views.logout_, name='logout'),
