@@ -98,6 +98,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = "/static/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
