@@ -66,6 +66,8 @@ jobs:
           POSTGRES_PASSWORD: test_pass
           POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
+          GOOGLE_CLIENT_ID: "test-client-id"
+          GOOGLE_CLIENT_SECRET: "test-client-secret"
         run: |
           python manage.py migrate
           python manage.py test
