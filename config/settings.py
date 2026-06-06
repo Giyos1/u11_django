@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from xml.etree.ElementInclude import include
+
 import environ
 import os
 
@@ -209,3 +211,4 @@ GOOGLE_REDIRECT_URI = 'http://localhost:8000/en/accounts/google/login/callback/'
 GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token"
 GOOGLE_USER_INFO_URL = "https://www.googleapis.com/oauth2/v1/userinfo"
+

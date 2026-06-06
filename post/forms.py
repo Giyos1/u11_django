@@ -11,3 +11,6 @@ class PostForms(forms.ModelForm):
             'title_en',
             'content_en',
         ]
+
+
+

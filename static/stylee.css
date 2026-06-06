@@ -7,7 +7,7 @@
 
 header {
     background-color: #1e293b;
-    color: white;
+    color: #c34747;
     padding: 20px 40px;
     /*display: flex;*/
     /*justify-content: space-between;*/
@@ -94,7 +94,7 @@ html, body {
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f5f7fa;
+    background-color: #143c78;
     color: #333;
 
     display: flex;

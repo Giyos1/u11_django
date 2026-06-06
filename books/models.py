@@ -41,7 +41,7 @@ class Book(models.Model):
                                 decimal_places=2)  # 6 xonali raqam . dan keyin 2 ta son bolishi mumkin 1222.22
     genre = models.CharField(max_length=50, choices=Genre, default=Genre.BADIIY)
     published_date = models.DateTimeField(auto_now=True)
-    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, blank=True)
+    author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True, blank=True,related_name='books')
 
     class Meta:
         db_table = 'books'
@@ -54,3 +54,9 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
+
+
+class Order(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
