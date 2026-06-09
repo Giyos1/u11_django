@@ -137,10 +137,10 @@ on:
 
 # 3) JOBLAR (vazifalar)
 jobs:
-  test:                       # job nomi
+  test: # job nomi
     runs-on: ubuntu-latest    # qaysi OS'da ishlaydi
 
-    steps:                    # qadamlar
+    steps: # qadamlar
       - name: Kodni olish
         uses: actions/checkout@v4   # tayyor action
 
@@ -152,5 +152,17 @@ jobs:
       - name: install library
         run: pip install -r requirements.txt
 
-      - name: Test qilish
-        run: python manage.py test   # oddiy terminal buyrug'i
+      - name: ✅ Testlarni ishga tushirish
+        env:
+          SECRET_KEY: "test-secret-key-faqat-ci-uchun"
+          DEBUG: "False"
+          POSTGRES_DB: test_db
+          POSTGRES_USER: test_user
+          POSTGRES_PASSWORD: test_pass
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+          GOOGLE_CLIENT_ID: "test-client-id"
+          GOOGLE_CLIENT_SECRET: "test-client-secret"
+        run: |
+          python manage.py migrate
+          python manage.py test
