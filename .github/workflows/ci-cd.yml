@@ -103,6 +103,7 @@ jobs:
             ${{ secrets.DOCKERHUB_USERNAME }}/u11_django:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/u11_django:${{ github.sha }}
 
+
   # ==========================================================
   #  3-JOB:  DEPLOY  (serverga chiqarish — CD ning oxiri)
   #  Faqat image push bo'lgandan keyin ishlaydi
