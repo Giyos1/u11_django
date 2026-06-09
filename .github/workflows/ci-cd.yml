@@ -149,5 +149,8 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: install library
+        run: pip install -r requirements.txt
+
       - name: Test qilish
         run: python manage.py test   # oddiy terminal buyrug'i
