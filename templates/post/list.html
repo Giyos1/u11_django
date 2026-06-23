@@ -6,11 +6,12 @@
 
 {% block main %}
     <div class="container mt-4">
-{#        {% if perms.post.add_post %}#}
-            <a href="{% url 'post:create' %}">
-                <button >create</button>
-            </a>
-{#        {% endif %}#}
+        <h1>Salom</h1>
+        {#        {% if perms.post.add_post %}#}
+        <a href="{% url 'post:create' %}">
+            <button>create</button>
+        </a>
+        {#        {% endif %}#}
         <table class="table">
             <thead>
             <tr>
@@ -86,7 +87,8 @@
 
                 {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}&search={{ search }}">keyingi</a>
+                        <a class="page-link"
+                           href="?page={{ page_obj.next_page_number }}&search={{ search }}">keyingi</a>
                     </li>
                 {% else %}
                     <li class="page-item disabled">
