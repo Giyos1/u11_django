@@ -1,0 +1,21 @@
+from django.db import models
+
+class Trip(models.Model):
+    vendor_id = models.CharField(max_length=20, blank=True, null=True)
+    pickup_date = models.DateField(blank=True, null=True)
+    dropoff_date = models.DateField(blank=True, null=True)
+    passenger_count = models.IntegerField(blank=True, null=True)
+    trip_distance = models.FloatField(db_index=True)
+    pickup_Longitude = models.FloatField(blank=True, null=True)
+    pickup_Latitude = models.FloatField(blank=True, null=True)
+    rate_code = models.CharField(max_length=20, blank=True, null=True)
+    store_and_fwd_flag = models.CharField(max_length=2, blank=True, null=True)
+    dropoff_longitude = models.FloatField(blank=True, null=True)
+    dropoff_latitude = models.FloatField(blank=True, null=True)
+    payment_type = models.CharField(max_length=20, blank=True, null=True)
+    fare_amount = models.CharField(blank=True, null=True)
+    surcharge = models.FloatField(blank=True, null=True)
+    mta_max = models.FloatField(blank=True, null=True)
+    trip_amount = models.FloatField(blank=True, null=True)
+    tools_amount = models.FloatField(blank=True, null=True)
+    total_amount = models.FloatField(blank=True, null=True)
